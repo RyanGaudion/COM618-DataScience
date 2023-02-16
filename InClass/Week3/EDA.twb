@@ -586,7 +586,7 @@
       <column datatype='string' name='[Country]' role='dimension' semantic-role='[Country].[ISO3166_2]' type='nominal' />
       <column datatype='string' name='[Postal Code]' role='dimension' semantic-role='[ZipCode].[Name]' type='nominal' />
       <column datatype='integer' name='[Row ID]' role='dimension' type='ordinal' />
-      <column datatype='integer' name='[Sales (bin)]' role='dimension' type='quantitative'>
+      <column aggregation='None' datatype='integer' name='[Sales (bin)]' role='dimension' type='quantitative'>
         <calculation class='bin' decimals='2' formula='[Sales]' peg='0' size='331' />
       </column>
       <column datatype='real' name='[Sales]' role='measure' type='quantitative' />
@@ -794,6 +794,64 @@
       </table>
       <simple-id uuid='{E0FEC2CC-4E47-46B0-8A08-882A46CA857A}' />
     </worksheet>
+    <worksheet name='Week 4'>
+      <table>
+        <view>
+          <datasources>
+            <datasource caption='Orders+ (Global Superstore data)' name='federated.00jls6t03lcv8u1ek53141nck6az' />
+          </datasources>
+          <datasource-dependencies datasource='federated.00jls6t03lcv8u1ek53141nck6az'>
+            <column datatype='date' name='[Order Date]' role='dimension' type='ordinal' />
+            <column datatype='real' name='[Sales]' role='measure' type='quantitative' />
+            <column datatype='string' name='[Segment]' role='dimension' type='nominal' />
+            <column-instance column='[Segment]' derivation='None' name='[none:Segment:nk]' pivot='key' type='nominal' />
+            <column-instance column='[Sales]' derivation='Sum' name='[sum:Sales:qk]' pivot='key' type='quantitative' />
+            <column-instance column='[Order Date]' derivation='Month-Trunc' name='[tmn:Order Date:qk]' pivot='key' type='quantitative' />
+          </datasource-dependencies>
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+            <encodings>
+              <color column='[federated.00jls6t03lcv8u1ek53141nck6az].[none:Segment:nk]' />
+            </encodings>
+            <style>
+              <style-rule element='mark'>
+                <format attr='line-interpolation' value='step' />
+              </style-rule>
+            </style>
+          </pane>
+        </panes>
+        <rows>[federated.00jls6t03lcv8u1ek53141nck6az].[sum:Sales:qk]</rows>
+        <cols>[federated.00jls6t03lcv8u1ek53141nck6az].[tmn:Order Date:qk]</cols>
+      </table>
+      <simple-id uuid='{4F58B665-9103-4CAF-9EC3-74F270EFE166}' />
+    </worksheet>
+    <worksheet name='Week 4.2'>
+      <table>
+        <view>
+          <datasources />
+          <aggregation value='true' />
+        </view>
+        <style />
+        <panes>
+          <pane selection-relaxation-option='selection-relaxation-allow'>
+            <view>
+              <breakdown value='auto' />
+            </view>
+            <mark class='Automatic' />
+          </pane>
+        </panes>
+        <rows />
+        <cols />
+      </table>
+      <simple-id uuid='{7E309EC5-4BFE-464F-8DA8-939DFFD41B5C}' />
+    </worksheet>
   </worksheets>
   <windows source-height='30'>
     <window class='worksheet' name='Sheet 1'>
@@ -866,7 +924,7 @@
       </viewpoint>
       <simple-id uuid='{B0B94D28-B10F-4BE3-A010-B7C557BF2B1F}' />
     </window>
-    <window class='worksheet' maximized='true' name='Sheet 3'>
+    <window class='worksheet' name='Sheet 3'>
       <cards>
         <edge name='left'>
           <strip size='160'>
@@ -906,6 +964,66 @@
         </highlight>
       </viewpoint>
       <simple-id uuid='{0A6ED359-6247-47A1-B3DD-567C439B2E41}' />
+    </window>
+    <window class='worksheet' name='Week 4'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+        <edge name='right'>
+          <strip size='160'>
+            <card pane-specification-id='0' param='[federated.00jls6t03lcv8u1ek53141nck6az].[none:Segment:nk]' type='color' />
+          </strip>
+        </edge>
+      </cards>
+      <viewpoint>
+        <highlight>
+          <color-one-way>
+            <field>[federated.00jls6t03lcv8u1ek53141nck6az].[none:Sales (bin):qk]</field>
+            <field>[federated.00jls6t03lcv8u1ek53141nck6az].[none:Segment:nk]</field>
+            <field>[federated.00jls6t03lcv8u1ek53141nck6az].[yr:Order Date:ok]</field>
+          </color-one-way>
+        </highlight>
+      </viewpoint>
+      <simple-id uuid='{4677C720-516D-4AD9-95FD-4809D42A867C}' />
+    </window>
+    <window class='worksheet' maximized='true' name='Week 4.2'>
+      <cards>
+        <edge name='left'>
+          <strip size='160'>
+            <card type='pages' />
+            <card type='filters' />
+            <card type='marks' />
+          </strip>
+        </edge>
+        <edge name='top'>
+          <strip size='2147483647'>
+            <card type='columns' />
+          </strip>
+          <strip size='2147483647'>
+            <card type='rows' />
+          </strip>
+          <strip size='31'>
+            <card type='title' />
+          </strip>
+        </edge>
+      </cards>
+      <simple-id uuid='{DAC2293A-3B8D-4030-B432-4B4FCB62D594}' />
     </window>
   </windows>
   <thumbnails>
@@ -1425,6 +1543,75 @@
       LpyZlNZ06u6qUuKb5epKnpOT2TsTXeSgws8f/HiJVyo6aYmZ4IGdExyOhLFLNUTQQAsIdsvr
       xOIxTF0nl5sFrf/y4/kTk8xldUIRial7BeXQZ+ZMAhLHDgFoCvz89Vdf5vkLF6V2+/DnBD8A
       vzHWs+OLYD8TDDAQiTAfNfx/cbW+aU5jRtAAAAAASUVORK5CYII=
+    </thumbnail>
+    <thumbnail height='192' name='Week 4' width='192'>
+      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
+    </thumbnail>
+    <thumbnail height='192' name='Week 4.2' width='192'>
+      iVBORw0KGgoAAAANSUhEUgAAAMAAAADACAYAAABS3GwHAAAACXBIWXMAAA7DAAAOwwHHb6hk
+      AAACFUlEQVR4nO3TMQEAIAzAMMC/5yFjRxMFfXpnZg5Eve0A2GQA0gxAmgFIMwBpBiDNAKQZ
+      gDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFI
+      MwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQD
+      kGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBp
+      BiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA
+      0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDN
+      AKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxA
+      mgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZ
+      gDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFI
+      MwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKQZgDQDkGYA0gxAmgFIMwBpBiDNAKR9Y+0F
+      fBUOM1sAAAAASUVORK5CYII=
     </thumbnail>
   </thumbnails>
 </workbook>
